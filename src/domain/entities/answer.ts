@@ -19,17 +19,40 @@ export class Answer extends Entity<AnswerProps> {
 
 		return answer
 	}
+
+	get excerpt() {
+		return this.content
+			.substring(0, 120)
+			.trimEnd()
+			.concat('...')
+	}
+
+	private touch() {
+		this.props.updatedAt = new Date()
+	}
+
+	set content(content: string) {
+		this.props.content = content
+		this.touch()
+	}
 	
-	
+	get authorId() {
+		return this.props.authorId
+	}
+
 	get content() {
 		return this.props.content
 	}
 
-		// get authorId() {
-		// 	return this.props.authorId
-		// }
+	get createAt() {
+		return this.props.createdAt
+	}
 
-		// get questionId() {
-		// 	return this.props.questionId
-		// }	
+	get questionId() {
+		return this.props.questionId
+	}
+
+	get updatedAt() {
+		return this.props.updatedAt
+	}
 }
