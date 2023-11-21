@@ -1,5 +1,3 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { makeAnswer } from 'test/factories/make-answer'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { makeQuestion } from 'test/factories/make-question'
 import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
