@@ -1,3 +1,4 @@
+import { Either, left, right } from '@/core/either'
 import { AnswerCommentsRepository } from '../repositories/answer-comments-repository'
 
 interface DeleteAnswerCommentUseCaseRequest {
@@ -5,8 +6,7 @@ interface DeleteAnswerCommentUseCaseRequest {
   answerCommentId: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeleteAnswerCommentUseCaseResponse {}
+type DeleteAnswerCommentUseCaseResponse = Either<string, {}>
 
 export class DeleteAnswerCommentUseCase {
   constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
@@ -14,14 +14,19 @@ export class DeleteAnswerCommentUseCase {
   async execute({
     authorId,
     answerCommentId,
-  }: DeleteAnswerCommentUseCaseRequest) {
+  }: DeleteAnswerCommentUseCaseRequest): Promise<DeleteAnswerCommentUseCaseResponse> {
     const answerComment =
       await this.answerCommentsRepository.findById(answerCommentId)
 
+    if (!answerComment) {
+      return left('Answer comment not found.')
+    }
+
     if (answerComment?.authorId.toString() !== authorId) {
-      throw new Error('Not allowed.')
+      return left('Not allowed')
     }
 
     await this.answerCommentsRepository.delete(answerComment)
+    return right({})
   }
 }
