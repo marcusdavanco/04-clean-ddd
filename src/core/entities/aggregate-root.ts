@@ -1,3 +1,3 @@
 import { Entity } from './entity'
 
-export abstract class AggregateRoot extends Entity<props> {}
+export abstract class AggregateRoot<T> extends Entity<T> {}
